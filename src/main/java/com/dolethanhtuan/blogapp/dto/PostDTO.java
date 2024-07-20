@@ -1,5 +1,6 @@
 package com.dolethanhtuan.blogapp.dto;
 
+import com.dolethanhtuan.blogapp.entity.Status;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ public class PostDTO {
     private String title;
     private String content;
     private String description;
+    private Status status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
