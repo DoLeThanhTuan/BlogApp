@@ -3,19 +3,18 @@ package com.dolethanhtuan.blogapp.service.impl;
 import com.dolethanhtuan.blogapp.dto.PostDTO;
 import com.dolethanhtuan.blogapp.entity.Post;
 import com.dolethanhtuan.blogapp.form.PostCreateForm;
+import com.dolethanhtuan.blogapp.form.PostFilterForm;
 import com.dolethanhtuan.blogapp.form.PostUpdateForm;
 import com.dolethanhtuan.blogapp.mapper.PostMapper;
 import com.dolethanhtuan.blogapp.repository.PostRepository;
 import com.dolethanhtuan.blogapp.service.IPostService;
+import com.dolethanhtuan.blogapp.specification.PostSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
@@ -23,8 +22,9 @@ public class PostServiceImpl implements IPostService {
     private PostRepository postRepository;
 
     @Override
-    public Page<PostDTO> findAll(Pageable pageable) {
-        return postRepository.findAll(pageable)
+    public Page<PostDTO> findAll(PostFilterForm form, Pageable pageable) {
+        Specification<Post> spec = PostSpecification.buildSpec(form);
+        return postRepository.findAll(spec,pageable)
                 .map(PostMapper::map);
     }
 

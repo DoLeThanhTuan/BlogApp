@@ -21,7 +21,7 @@ public class CommentMapper {
         commentDTO.setBody(comment.getBody());
         commentDTO.setCreatedAt(comment.getCreatedAt());
         commentDTO.setUpdatedAt(comment.getUpdatedAt());
-        return commentDTO;
+        return commentDTO.withSelfRel();
     }
     public static void map(CommentUpdateForm form , Comment comment){
         comment.setName(form.getName());

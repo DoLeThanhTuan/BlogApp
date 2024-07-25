@@ -2,6 +2,7 @@ package com.dolethanhtuan.blogapp.mapper;
 
 import com.dolethanhtuan.blogapp.dto.PostDTO;
 import com.dolethanhtuan.blogapp.entity.Post;
+import com.dolethanhtuan.blogapp.entity.Status;
 import com.dolethanhtuan.blogapp.form.PostCreateForm;
 import com.dolethanhtuan.blogapp.form.PostUpdateForm;
 
@@ -11,7 +12,7 @@ public class PostMapper {
         post.setTitle(form.getTitle());
         post.setContent(form.getContent());
         post.setDescription(form.getDescription());
-        post.setStatus(form.getStatus());
+        post.setStatus(Status.valueOf(form.getStatus()));
         return post;
     }
     public static PostDTO map(Post post){
@@ -23,12 +24,13 @@ public class PostMapper {
         dto.setStatus(post.getStatus());
         dto.setCreatedAt(post.getCreatedAt());
         dto.setUpdatedAt(post.getUpdatedAt());
-        return dto;
+
+        return dto.withSelfRel();
     }
     public static void map(PostUpdateForm form, Post post){
         post.setTitle(form.getTitle());
         post.setContent(form.getContent());
         post.setDescription(form.getDescription());
-        post.setStatus(form.getStatus());
+        post.setStatus(Status.valueOf(form.getStatus()));
     }
 }

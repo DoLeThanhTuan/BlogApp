@@ -4,14 +4,17 @@ import com.dolethanhtuan.blogapp.dto.CommentDTO;
 import com.dolethanhtuan.blogapp.entity.Comment;
 import com.dolethanhtuan.blogapp.entity.Post;
 import com.dolethanhtuan.blogapp.form.CommentCreateForm;
+import com.dolethanhtuan.blogapp.form.CommentFilterForm;
 import com.dolethanhtuan.blogapp.form.CommentUpdateForm;
 import com.dolethanhtuan.blogapp.mapper.CommentMapper;
 import com.dolethanhtuan.blogapp.repository.CommentRepository;
 import com.dolethanhtuan.blogapp.repository.PostRepository;
 import com.dolethanhtuan.blogapp.service.ICommentService;
+import com.dolethanhtuan.blogapp.specification.CommentSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +28,9 @@ public class CommentServiceImpl implements ICommentService {
     private PostRepository postRepository;
 
     @Override
-    public Page<CommentDTO> findAll(Pageable pageable) {
-        return commentRepository.findAll(pageable)
+    public Page<CommentDTO> findAll(CommentFilterForm form, Pageable pageable) {
+        Specification<Comment> specification = CommentSpecification.buidSpec(form);
+        return commentRepository.findAll(specification,pageable)
                 .map(CommentMapper::map);
     }
 
